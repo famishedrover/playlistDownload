@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import os
-import urllib2 as ulib
+import urllib2
 from selenium import webdriver
 
 os.system('clear')
@@ -36,19 +36,23 @@ mark['='] = '%3D'
 
 # 	f.close()
 
-# def download(link,audio,filename):
-# 	req = urllib2.urlopen(url)
-# 	CHUNK = 16 * 1024
-# 	ext = ''
-# 	if audio is True :
-# 		ext = '.mp3'
-# 	else :
-# 		ext = '.mp4'
-# 	with open(filename+ext, 'wb') as fp:
-# 	  while True:
-# 	    chunk = req.read(CHUNK)
-# 	    if not chunk: break
-# 	    fp.write(chunk)
+def download(link,audio,filename):
+	print ''
+	req = urllib2.urlopen(link)
+	CHUNK = 1024
+	ext = ''
+	if audio is True :
+		ext = '.mp3'
+	else :
+		ext = '.mp4'
+	i =0 
+	with open(filename+ext, 'wb') as fp:
+	  while True:
+	  	i += 1
+	  	chunk = req.read(CHUNK)
+	  	if not chunk: break
+	  	fp.write(chunk)
+	  	print '\b'*int(len(str(i))+1)+str(i),
 
 
 def download_selenium(link,audio,filename):
@@ -58,22 +62,23 @@ def download_selenium(link,audio,filename):
 		ext = '.mp4'
 	driver = webdriver.Chrome()
 	driver.get(link)
+	# driver.quit()
 
 
 
-def download(link ,audio,filename) :
-	response = requests.get(link, stream=True)
-	ext = ''
-	if audio is True :
-		ext = '.mp3'
-	else :
-		ext = '.mp4'
+# def download(link ,audio,filename) :
+# 	response = requests.get(link, stream=True)
+# 	ext = ''
+# 	if audio is True :
+# 		ext = '.mp3'
+# 	else :
+# 		ext = '.mp4'
 
-	target_path = filename+ext
-	handle = open(target_path, "wb")
-	for chunk in response.iter_content(chunk_size=1024):
-	    if chunk:  # filter out keep-alive new chunks
-	        handle.write(chunk)
+# 	target_path = filename+ext
+# 	handle = open(target_path, "wb")
+# 	for chunk in response.iter_content(chunk_size=1024):
+# 	    if chunk:  # filter out keep-alive new chunks
+# 	        handle.write(chunk)
 
 
 # def download(link,audio,filename):
@@ -139,20 +144,18 @@ def get_info(link,out=False):
 
 	return data
 
+if __name__ == '__main__':
 
-link = 'https://www.youtube.com/watch?v=QohH89Eu5iM'
-# keepvidlink = 'http://keepvid.com/?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DQohH89Eu5iM'
-keepvidlink = 'http://keepvid.com/?url=https%3A%2F%2Fwww.youtube.com%2F%2Fwatch%3Fv%3DxRJCOz3AfYY&list%3DPL2-dafEMk2A7mu0bSksCGMJEmeddU_H4D&index%3D1'
-data= get_info(link,out=False)
-print data
-link = data[0][4]
-audio = data[0][3]
-
-
-
-# path = 'tester'
-# print filename+'.'+ext
-# download(data[0][4] ,audio, path )
+	link = 'https://www.youtube.com/watch?v=QohH89Eu5iM'
+	# keepvidlink = 'http://keepvid.com/?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DQohH89Eu5iM'
+	keepvidlink = 'http://keepvid.com/?url=https%3A%2F%2Fwww.youtube.com%2F%2Fwatch%3Fv%3DxRJCOz3AfYY&list%3DPL2-dafEMk2A7mu0bSksCGMJEmeddU_H4D&index%3D1'
+	data= get_info(link,out=False)
+	print data
+	link = data[0][4]
+	audio = data[0][3]
+	# path = 'tester'
+	# print filename+'.'+ext
+	# download(data[0][4] ,audio, path )
 
 
 

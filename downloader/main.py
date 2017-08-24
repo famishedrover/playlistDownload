@@ -29,12 +29,9 @@ for link in links :
 	xname = xname[0].strip() + ' ' + xname[1].strip()
 	print xname, ' ',
 	data = get_info(youlink)
-	print youlink
-
-
+	# print youlink
 	link = data[0][4]
 	audio = data[0][3]
-	print link , audio
+	# print link , audio
 	download(link,audio,filename+xname)
-
 	print '-'*50
